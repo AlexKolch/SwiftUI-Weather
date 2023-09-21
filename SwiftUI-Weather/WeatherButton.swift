@@ -11,13 +11,10 @@ struct WeatherButton: View {
     var backgroundColor: Color
 
     var body: some View {
-        Button {
-            print("did tapped")
-        } label: {
-            Text(title)
-                .frame(width: 280, height: 50)
-                .background(backgroundColor)
-                .cornerRadius(10)
-        }.padding()
+        Text(title)
+            .frame(width: 280, height: 50)
+            .background(backgroundColor)
+            .cornerRadius(10)
     }
 }
+

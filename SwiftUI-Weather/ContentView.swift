@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State private var isNight: Bool = false
+
     var body: some View {
         ZStack {
-            BackgroundView(topColor: .blue, bottomColor: Color("myCyan"))
+            BackgroundView(isNight: $isNight)
             VStack {
                 CityTextView(cityName: "Cupertino, CA")
-                MainWeatherView(imageWeather: "cloud.sun.fill", temperature: 76)
+                MainWeatherView(isNight: $isNight)
 
                 HStack(spacing: 20.0) {
                     WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 74)
@@ -24,7 +27,11 @@ struct ContentView: View {
                 }
                 Spacer()
 
-                WeatherButton(title: "Change mode", backgroundColor: Color(white: 1, opacity: 0.7))
+                Button {
+                    isNight.toggle()
+                } label: {
+                    WeatherButton(title: "Change mode", backgroundColor: Color(white: 1, opacity: 0.7))
+                }.padding()
             }
         }
     }
@@ -57,11 +64,10 @@ struct WeatherDayView: View {
 }
 
 struct BackgroundView: View {
-    var topColor: Color
-    var bottomColor: Color
+    @Binding var isNight: Bool
 
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]), startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(gradient: Gradient(colors: [isNight ? .black : .blue, isNight ? .gray : Color("myCyan")]), startPoint: .topLeading, endPoint: .bottomTrailing)
             .ignoresSafeArea()
     }
 }
@@ -78,22 +84,23 @@ struct CityTextView: View {
 }
 
 struct MainWeatherView: View {
-    var imageWeather: String
-    var temperature: Int
+    @Binding var isNight: Bool
 
     var body: some View {
         VStack(spacing: 10.0) {
-            Image(systemName: imageWeather)
+            Image(systemName: isNight ? "moon.stars.fill" : "cloud.sun.fill")
                 .renderingMode(.original)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 180, height: 180)
 
-            Text("\(temperature)°")
+            Text(isNight ? "60°" : "76°")
                 .font(.system(size: 70, weight: .medium))
                 .foregroundColor(.white)
         }.padding(.bottom, 40)
     }
 }
+
+
 
 
