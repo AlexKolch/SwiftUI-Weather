@@ -37,6 +37,15 @@ struct ContentView: View {
                     WeatherDayView(dayOfWeek: "SAT", imageName: "sunset.fill", temperature: 68)
                 }
                 Spacer()
+
+                Button {
+                    print("did tapped")
+                } label: {
+                    Text("Change mode")
+                        .frame(width: 180, height: 50)
+                        .background(Color(white: 1, opacity: 0.6))
+                        .cornerRadius(10)
+                }.padding()
             }
         }
     }
